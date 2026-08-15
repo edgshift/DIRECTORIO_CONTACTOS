@@ -4,8 +4,10 @@
 
 const listaContactos = document.getElementById("listaContactos");
 const estadoVacio = document.getElementById("estadoVacio");
+const estadoCarga = document.getElementById("estadoCarga");
 const contador = document.getElementById("contador");
 const buscador = document.getElementById("buscador");
+const btnGuardar = document.getElementById("btnGuardar");
 
 const overlay = document.getElementById("overlay");
 const panel = document.getElementById("panelFormulario");
@@ -19,12 +21,18 @@ let contactos = [];
 // ---------- Cargar y pintar ----------
 
 async function cargarContactos() {
+  estadoCarga.classList.remove("oculto");
+  estadoVacio.classList.add("oculto");
+  listaContactos.innerHTML = "";
+
   try {
     contactos = await obtenerContactos();
     pintarContactos(contactos);
   } catch (error) {
     mostrarToast("No se pudo conectar con el servidor");
     console.error(error);
+  } finally {
+    estadoCarga.classList.add("oculto");
   }
 }
 
@@ -111,6 +119,10 @@ formContacto.addEventListener("submit", async (evento) => {
     notas: document.getElementById("notas").value.trim()
   };
 
+  const textoOriginal = btnGuardar.textContent;
+  btnGuardar.disabled = true;
+  btnGuardar.innerHTML = `<span class="spinner-chico"></span>Guardando…`;
+
   try {
     if (id) {
       await actualizarContacto(id, datos);
@@ -124,6 +136,9 @@ formContacto.addEventListener("submit", async (evento) => {
   } catch (error) {
     mostrarToast("Ocurrió un error al guardar");
     console.error(error);
+  } finally {
+    btnGuardar.disabled = false;
+    btnGuardar.textContent = textoOriginal;
   }
 });
 
@@ -134,6 +149,10 @@ btnEliminar.addEventListener("click", async () => {
   const confirmado = confirm("¿Seguro que quieres eliminar este contacto?");
   if (!confirmado) return;
 
+  const textoOriginal = btnEliminar.textContent;
+  btnEliminar.disabled = true;
+  btnEliminar.innerHTML = `<span class="spinner-chico"></span>Eliminando…`;
+
   try {
     await eliminarContacto(id);
     mostrarToast("Contacto eliminado");
@@ -142,6 +161,9 @@ btnEliminar.addEventListener("click", async () => {
   } catch (error) {
     mostrarToast("No se pudo eliminar");
     console.error(error);
+  } finally {
+    btnEliminar.disabled = false;
+    btnEliminar.textContent = textoOriginal;
   }
 });
 

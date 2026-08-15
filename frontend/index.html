@@ -27,6 +27,11 @@
       <span id="contador" class="contador">0 contactos</span>
     </div>
 
+    <div id="estadoCarga" class="estado-carga oculto">
+      <span class="spinner"></span>
+      <p>Cargando contactos…</p>
+    </div>
+
     <div id="estadoVacio" class="estado-vacio oculto">
       <span class="estado-vacio-icono">◈</span>
       <p>Todavía no hay contactos.</p>
@@ -66,7 +71,7 @@
         <button type="button" id="btnEliminar" class="btn btn-peligro oculto">Eliminar</button>
         <div class="panel-footer-derecha">
           <button type="button" id="btnCancelar" class="btn btn-secundario">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar</button>
         </div>
       </div>
     </form>
