@@ -1,16 +1,25 @@
+require('dotenv').config()
+
 const express = require('express')
+const cors = require('cors')
+const connectDB = require('./Config/database')
+const routes = require('./Routes/dircontactosRoutes')
+
 const app = express()
 
-const PORT = process.env.PORT || 3700; 
-const controller = require('./Controllers/dircontactosControllers')
-const route = require('./Routes/dircontactosRoutes')
-const connectDB = require('./Config/database')
+const PORT = process.env.PORT || 3700
 
+app.use(cors())
 app.use(express.json())
-app.use('/api/contactos_directorio', route)
 
-connectDB()
+app.use('/api/contactos_directorio', routes)
 
-app.listen(PORT, () => {
-    console.log(`El puerto se encuentra en el servidor ${PORT}`)
-})
+const startServer = async () => {
+    await connectDB()
+
+    app.listen(PORT, () => {
+        console.log(`Servidor ejecutándose en http://localhost:${PORT}`)
+    })
+}
+
+startServer()

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Directorio de Contactos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◈</span>
+      <div>
+        <h1>Directorio de Contactos</h1>
+        <p class="subtitle">Tu rolodex digital</p>
+      </div>
+    </div>
+    <button id="btnNuevo" class="btn btn-primary">+ Nuevo contacto</button>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <input type="text" id="buscador" placeholder="Buscar por nombre o empresa…">
+      <span id="contador" class="contador">0 contactos</span>
+    </div>
+
+    <div id="estadoCarga" class="estado-carga oculto">
+      <span class="spinner"></span>
+      <p>Cargando contactos…</p>
+    </div>
+
+    <div id="estadoVacio" class="estado-vacio oculto">
+      <span class="estado-vacio-icono">◈</span>
+      <p>Todavía no hay contactos.</p>
+      <p class="estado-vacio-sub">Agrega el primero con el botón de arriba.</p>
+    </div>
+
+    <div id="listaContactos" class="grid-contactos"></div>
+  </main>
+
+  <!-- Panel lateral: formulario crear / editar -->
+  <div id="overlay" class="overlay oculto"></div>
+  <aside id="panelFormulario" class="panel oculto">
+    <div class="panel-header">
+      <h2 id="tituloFormulario">Nuevo contacto</h2>
+      <button id="btnCerrarPanel" class="btn-icono" aria-label="Cerrar">✕</button>
+    </div>
+
+    <form id="formContacto" novalidate>
+      <input type="hidden" id="contactoId">
+
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" required>
+
+      <label for="telefono">Teléfono</label>
+      <input type="tel" id="telefono" required>
+
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" required>
+
+      <label for="empresa">Empresa</label>
+      <input type="text" id="empresa" required>
+
+      <label for="notas">Notas</label>
+      <textarea id="notas" rows="4" required></textarea>
+
+      <div class="panel-footer">
+        <button type="button" id="btnEliminar" class="btn btn-peligro oculto">Eliminar</button>
+        <div class="panel-footer-derecha">
+          <button type="button" id="btnCancelar" class="btn btn-secundario">Cancelar</button>
+          <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </aside>
+
+  <div id="toast" class="toast oculto"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
